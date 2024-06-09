@@ -1,6 +1,6 @@
 const { Schema, model, default: mongoose } = require("mongoose");
-const friendCountSchema = require("./friendCount");
-const thoughtSchema = require("./thoughtModel");
+const friendCount = require("./friendCount");
+const thought = require("./thoughtModel");
 
 const userSchema = new Schema(
   {
