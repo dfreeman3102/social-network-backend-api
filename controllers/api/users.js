@@ -59,7 +59,23 @@ router.delete("/:_id", async (req, res) => {
   }
 });
 //adds a friend to a single user
-router.post("/:_id/friends/:friendId", async (req, res) => {});
+router.post("/:_id/friends", async (req, res) => {
+  try {
+    const userId = req.params._id;
+    const friendId = req.body.friends;
+
+    const addFriend = await User.findOneAndUpdate(
+      { _id: userId },
+      { $addToSet: { friends: friendId } },
+      { new: true }
+    );
+
+    res.status(200).json(addFriend);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
 //deletes a friend from a single user
 router.delete("/:_id/friends/:friendId", async (req, res) => {});
 

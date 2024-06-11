@@ -1,5 +1,4 @@
 const { Schema, model, default: mongoose } = require("mongoose");
-const User = require("./userModel");
 
 const reactionSchema = new Schema({
   reactionId: {
