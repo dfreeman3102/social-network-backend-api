@@ -13,13 +13,13 @@ router.get("/", async (req, res) => {
 });
 //adds a new user
 router.post("/", async (req, res) => {
-    try {
-        const user = await User.create(req.body);
-        res.json(user);
-      } catch (err) {
-        console.log(err);
-        return res.status(500).json(err);
-      }
+  try {
+    const user = await User.create(req.body);
+    res.json(user);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
 });
 //gets a single users data
 router.get("/:_id", async (req, res) => {
@@ -35,7 +35,19 @@ router.get("/:_id", async (req, res) => {
   }
 });
 //updates a single users data
-router.put("/:_id", async (req, res) => {});
+router.put("/:_id", async (req, res) => {
+  try {
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: req.params._id },
+      req.body,
+      { new: true }
+    );
+    res.status(200).json(updatedUser);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+});
 //deletes a single users data
 router.delete("/:_id", async (req, res) => {});
 //adds a friend to a single user
