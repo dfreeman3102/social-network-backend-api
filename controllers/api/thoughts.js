@@ -36,7 +36,17 @@ router.get("/:_id", async (req, res) => {
 });
 //updates a single thoughts data
 router.put('/:_id', async (req, res) =>{
-
+    try {
+        const updatedThought = await Thought.findOneAndUpdate(
+          { _id: req.params._id },
+          req.body,
+          { new: true }
+        );
+        res.status(200).json(updatedThought);
+      } catch (err) {
+        console.log(err);
+        return res.status(500).json(err);
+      }
 });
 //deletes a single thoughts data
 router.delete('/:_id', async (req, res) => {
