@@ -1,32 +1,40 @@
 const router = require("express").Router();
-const { User } = require("../../models/userModel");
+const User = require("../../models/userModel");
+console.log(User);
 //gets all the user data
 router.get("/", async (req, res) => {
-
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
 });
 //adds a new user
-router.post('/', async (req, res) => {
-
+router.post("/", async (req, res) => {
+ 
 });
 //gets a single users data
-router.get("/:userId", async (req, res) => {
-
+router.get("/:_id", async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.params._id });
+    if (!user) {
+      return res.status(404).json({ message: "No User with this Id" });
+    }
+    res.json(user);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
 });
 //updates a single users data
-router.put('/:userId', async (req, res) =>{
-
-});
+router.put("/:_id", async (req, res) => {});
 //deletes a single users data
-router.delete('/:userId', async (req, res) => {
-
-});
+router.delete("/:_id", async (req, res) => {});
 //adds a friend to a single user
-router.post('/:userId/friends/:friendId', async (req, res) => {
-
-});
+router.post("/:_id/friends/:friendId", async (req, res) => {});
 //deletes a friend from a single user
-router.delete('/:userId/friends/:friendId', async (req, res) => {
-
-});
+router.delete("/:_id/friends/:friendId", async (req, res) => {});
 
 module.exports = router;
