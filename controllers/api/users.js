@@ -49,7 +49,15 @@ router.put("/:_id", async (req, res) => {
   }
 });
 //deletes a single users data
-router.delete("/:_id", async (req, res) => {});
+router.delete("/:_id", async (req, res) => {
+  try {
+    const deletedUser = await User.findOneAndDelete({ _id: req.params._id });
+    res.status(200).json({ message: `Deleted UserId: ${deletedUser._id}` });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+});
 //adds a friend to a single user
 router.post("/:_id/friends/:friendId", async (req, res) => {});
 //deletes a friend from a single user
