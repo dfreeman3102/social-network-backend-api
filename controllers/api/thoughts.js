@@ -82,6 +82,23 @@ router.post("/:_id/reactions", async (req, res) => {
   }
 });
 //deletes a reaction from a single thought
-router.delete("/:_id/reactions/:reactionId", async (req, res) => {});
+router.delete("/:_id/reactions", async (req, res) => {
+    try {
+    const thoughtId = req.params._id;
+    const oldReaction = {
+      reactionBody: req.body.reactionBody,
+      username: req.body.username
+    }
+    const removeReaction = await Thought.findOneAndUpdate(
+      { _id: thoughtId },
+      { $pull: { reactions: oldReaction } },
+      { new: true }
+    );
+    res.status(200).json(removeReaction)
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+});
 
 module.exports = router;

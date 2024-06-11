@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const User = require("../../models/userModel");
-console.log(User);
 //gets all the user data
 router.get("/", async (req, res) => {
   try {
