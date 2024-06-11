@@ -50,7 +50,13 @@ router.put('/:_id', async (req, res) =>{
 });
 //deletes a single thoughts data
 router.delete('/:_id', async (req, res) => {
-
+    try {
+        const deletedThought = await Thought.findOneAndDelete({ _id: req.params._id });
+        res.status(200).json({ message: `Deleted ThoughtId: ${deletedThought._id}` });
+      } catch (err) {
+        console.log(err);
+        return res.status(500).json(err);
+      }
 });
 //adds a reaction to a single thought
 router.post('/:_id/reactions', async (req, res) => {
