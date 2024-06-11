@@ -1,8 +1,8 @@
 // imports all required modules and data
 const mongoose = require('mongoose');
 const connection = require('../config/connection');
-const { User } = require('../models/userModel');
-const { Thought } = require('../models/thoughtModel');
+const User = require('../models/userModel');
+const Thought = require('../models/thoughtModel');
 const { seedUsers, seedThoughts } = require('./data');
 //function to seed the DB
 const seedDB = async () => {
