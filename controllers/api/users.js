@@ -73,10 +73,25 @@ router.post("/:_id/friends", async (req, res) => {
     res.status(200).json(addFriend);
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ error: 'Internal server error' });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 //deletes a friend from a single user
-router.delete("/:_id/friends/:friendId", async (req, res) => {});
+router.delete("/:_id/friends", async (req, res) => {
+  try {
+    const userId = req.params._id;
+    const friendId = req.body.friends;
+
+    const removeFriend = await User.findOneAndUpdate(
+      { _id: userId },
+      { $pull: { friends: friendId } },
+      { new: true }
+    );
+    res.status(200).json(removeFriend)
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 module.exports = router;
