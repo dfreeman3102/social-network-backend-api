@@ -13,7 +13,13 @@ router.get("/", async (req, res) => {
 });
 //adds a new thought
 router.post('/', async (req, res) => {
-
+    try {
+        const newThought = await Thought.create(req.body);
+        res.json(newThought);
+      } catch (err) {
+        console.log(err);
+        return res.status(500).json(err);
+      }
 });
 //gets a single thoughts data
 router.get("/:_id", async (req, res) => {
